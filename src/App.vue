@@ -1,6 +1,6 @@
 <template>
   <b-container class="my-2">
-    <h1 class="text-center">Memory Game</h1>
+    <h1 class="text-center">Concentrese para que no se le olvide</h1>
     <b-row align-v="center" class="justify-content-center mt-3">
       <b-col
         v-for="(i, index) in randomIndexes"
@@ -256,3 +256,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  color: palevioletred;
+}
+</style>
