@@ -4,22 +4,28 @@
       <div class="flip-card-front justify-content-center d-flex align-items-center">
         <b-row>
           <b-col sm="12">
-            <h1 class="text-center">{{ number }}</h1>
-          </b-col>
-          <b-col sm="12">
-            <b-button
-              @click="open"
-              pill
-              variant="outline-light"
-              :disabled="card.isDisabled"
+            <img
+              :src="require(`../assets/images/numeros/NUMEROS-MUJERES-${this.number}.png`)"
+              :alt="`NUMEROS-MUJERES-${this.number}`"
             >
-              Girar
-            </b-button>
+            <div class="button" :style="hideButton">
+              <b-button
+                @click="open"
+                pill
+                variant="outline-light"
+                :disabled="card.isDisabled"
+              >
+                Girar
+              </b-button>
+            </div>
           </b-col>
         </b-row>
       </div>
       <div class="flip-card-back justify-content-center d-flex align-items-center">
-        {{ card.name }}
+        <img
+          :src="require(`../assets/images/mujeres/MUJERES-${this.card.id}.png`)"
+          :alt="`MUJERES-${this.card.id}`"
+        >
       </div>
     </div>
   </div>
@@ -27,7 +33,6 @@
 
 <script>
 export default {
-  name: 'MemoryCard',
   props: {
     card: {
       type: Object,
@@ -39,6 +44,13 @@ export default {
     },
   },
   computed: {
+    hideButton() {
+      if (this.card.isOpened || this.card.isDisabled) {
+        return { display: 'none' };
+      }
+
+      return { display: 'block' };
+    },
     rotate() {
       // Rotate the card when it's opened or card is disabled
       if (this.card.isOpened || this.card.isDisabled) {
@@ -47,11 +59,6 @@ export default {
 
       return { transform: 'rotateY(0deg)' };
     },
-  },
-  data() {
-    return {
-      degrees: '0deg',
-    };
   },
   methods: {
     open() {
@@ -64,6 +71,21 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 7rem;
+  height: 9rem;
+}
+
+.button {
+  position: absolute;
+  top: 95%;
+  left: 20%;
+  z-index: 1;
+  -ms-transform: translateY(-95%);
+  transform: translateY(-95%);
+  justify-content: center;
+}
+
 .flip-card {
   background-color: transparent;
   width: 7rem;
@@ -79,7 +101,6 @@ export default {
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .flip-card-front, .flip-card-back {
@@ -91,12 +112,11 @@ export default {
 }
 
 .flip-card-front {
-  background-color: pink;
+  background-color: transparent;
   color: black;
 }
 
 .flip-card-back {
-  background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
 }
