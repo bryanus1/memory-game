@@ -1,18 +1,26 @@
 <template>
-  <b-card
-    class="memory-card m-5"
-    :border-variant="card.isDisabled ? 'secondary' : 'primary'"
-  >
-    <h5>{{ isOpen ? card.name : card.name }}</h5>
-
-    <b-button
-      @click="open"
-      :variant="card.isDisabled ? 'secondary' : 'primary'"
-      :disabled="card.isDisabled"
-    >
-        Girar
-      </b-button>
-  </b-card>
+  <div class="flip-card">
+    <div class="flip-card-inner" :style="rotate">
+      <div class="flip-card-front justify-content-center d-flex align-items-center">
+        <b-row>
+          <b-col sm="12">
+            <h1 class="text-center">{{ number }}</h1>
+          </b-col>
+          <b-col sm="12">
+            <b-button
+              @click="open"
+              :disabled="card.isDisabled"
+            >
+              Girar
+            </b-button>
+          </b-col>
+        </b-row>
+      </div>
+      <div class="flip-card-back justify-content-center d-flex align-items-center">
+        {{ card.name }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,14 +36,23 @@ export default {
       required: true,
     },
   },
+  computed: {
+    rotate() {
+      // Rotate the card when it's opened or card is disabled
+      if (this.card.isOpened || this.card.isDisabled) {
+        return { transform: 'rotateY(180deg)' };
+      }
+
+      return { transform: 'rotateY(0deg)' };
+    },
+  },
   data() {
     return {
-      isOpen: false,
+      degrees: '0deg',
     };
   },
   methods: {
     open() {
-      this.isOpen = true;
       if (!this.card.isDisabled) {
         this.$emit('open', this.card);
       }
@@ -45,7 +62,45 @@ export default {
 </script>
 
 <style scoped>
-.memory-card {
-  max-width: 200px;
+.flip-card {
+  background-color: transparent;
+  width: 7rem;
+  height: 9rem;
+  perspective: 1000px;
+  border-radius: 10px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+/* .flip-card:hover .flip-card-inner {
+  transform: rotateY(0deg);
+  transform: rotateY(180deg);
+} */
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
 }
 </style>
