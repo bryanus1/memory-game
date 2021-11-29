@@ -9,6 +9,8 @@
           <b-col sm="12">
             <b-button
               @click="open"
+              pill
+              variant="outline-light"
               :disabled="card.isDisabled"
             >
               Girar
@@ -80,11 +82,6 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-/* .flip-card:hover .flip-card-inner {
-  transform: rotateY(0deg);
-  transform: rotateY(180deg);
-} */
-
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
@@ -94,7 +91,7 @@ export default {
 }
 
 .flip-card-front {
-  background-color: #bbb;
+  background-color: pink;
   color: black;
 }
 

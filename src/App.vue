@@ -5,7 +5,7 @@
       <b-col
         v-for="(i, index) in randomIndexes"
         :key="index + 1"
-        sm="2"
+        sm="6"
         lg="2"
         class="my-3"
       >
@@ -259,7 +259,6 @@ export default {
   },
   methods: {
     open(card) {
-      console.log(card);
       this.cardsSelected.push(card);
 
       Object.entries(this.dataCard).forEach(([key, value]) => {
@@ -283,12 +282,6 @@ export default {
           }, 1000);
         }
       }
-    },
-    reset() {
-      this.cardsSelected = [];
-      this.dataCard.forEach((index) => {
-        this.dataCard[index].isDisabled = false;
-      });
     },
   },
 };
